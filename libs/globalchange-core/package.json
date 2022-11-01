@@ -1,4 +1,7 @@
 {
   "name": "@globalchange/core",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "rxjs-http-client": "^7.0.7"
+  }
 }

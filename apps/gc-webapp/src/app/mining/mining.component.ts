@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import * as core from '@globalchange/core'
+import * as core from '@globalchange/core';
 
 @Component({
   selector: 'gc-webapp-mining',
@@ -8,9 +8,12 @@ import * as core from '@globalchange/core'
 })
 export class MiningComponent implements OnInit {
 
-  constructor(@Inject("GLOBAL_CHANGE_CORE_SERVICE") public gcCore: core.GCCoreService) {}
-  
-  ngOnInit(): void {core.globalchangeCore()}
+  constructor(@Inject("GLOBAL_CHANGE_CORE_SERVICE") public gcCore: core.GCCoreService) {
+  }
+
+  ngOnInit(): void {
+    this.gcCore.startup()
+  }
   
   onSubmit() {
     alert('Thanks for submitting! Data: ');
