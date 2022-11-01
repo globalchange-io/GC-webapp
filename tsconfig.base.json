@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@globalchange/core": ["libs/globalchange-core/src/index.ts"],
+      "@globalchange/core": ["libs/globalchange-core/src/index.ts"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true
