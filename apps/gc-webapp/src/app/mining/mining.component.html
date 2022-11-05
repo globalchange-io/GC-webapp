@@ -1,22 +1,88 @@
 <h1>GC Token Mining</h1>
 
-<table>
-    <tr>
-        <th>Asset</th>
-        <th>Price</th>
-    </tr>
-    <tr>
-        <td>CPI</td>
-        <td>{{ gcCore.cpiPrice$ | async }}</td>
-    </tr>
-    <tr>
-        <td>Global Change</td>
-        <td>Price</td>
-    </tr>
-</table>
+<mat-card>
+    <mat-card-title>Market Prices</mat-card-title>
+    <mat-card-content>
+        <table>
+            <tr>
+                <th>Asset</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td>CPI</td>
+                <td>{{ gcCore.cpiPrice$ | async }}$</td>
+            </tr>
+            <tr>
+                <td>Stellar</td>
+                <td>{{ gcCore.stellarUsd$ | async }}$</td>
+            </tr>
+            <tr>
+                <td>Global Change</td>
+                <td>{{ (gcCore.cpiPrice$ | async)! / 300 }}$</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
 
-<div class="formdiv">
-    <form  class="formwidth" (ngSubmit)="onSubmit()">
 
+<div class="container">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+        <mat-form-field class="form-element">
+            <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+
+        <div class="denominations-container">
+            <mat-card class="denomination-card">
+                <mat-card-title>Pennzy</mat-card-title>
+                <mat-card-content>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Number</mat-label>
+                        <input matInput type="number" placeholder="Ex. 12" max="100">
+                      </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="denomination-card">
+                <mat-card-title>Nicole</mat-card-title>
+                <mat-card-content>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Number</mat-label>
+                        <input matInput type="number" placeholder="Ex. 12" max="100">
+                      </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Total to purchase</mat-label>
+            <input matInput placeholder="Simple placeholder">
+          </mat-form-field>
+
+          <h2>Choose your charities</h2>
+          <table>
+                <tr>
+                    <th></th>
+                    <th>Logo</th>
+                    <th>Name</th>
+                </tr>
+                <tr>
+                    <td><mat-checkbox></mat-checkbox></td>
+                    <td>logo</td>
+                    <td>Bali Food Bank</td>
+                </tr>
+                <tr>
+                    <td><mat-checkbox></mat-checkbox></td>
+                    <td>logo</td>
+                    <td>Heifer International</td>
+                </tr>
+                <tr>
+                    <td><mat-checkbox></mat-checkbox></td>
+                    <td>logo</td>
+                    <td>Crypto for the Homeless</td>
+                </tr>
+          </table>
+
+        <div class="form-element">
+            <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
+        </div>
     </form>
 </div>
