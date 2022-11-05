@@ -1,6 +1,6 @@
-import { BehaviorSubject, catchError, EMPTY, first, map, mergeMap } from 'rxjs';
-import { RxJSHttpClient, HttpRequestConfig, HttpResponse } from 'rxjs-http-client'
+import { BehaviorSubject } from 'rxjs';
 import { CoingeckoStellarRequest } from './models/requests-modeled';
+import fetch from 'node-fetch'
 
 export function globalchangeCore(): string {
   return 'globalchange-core';
@@ -15,41 +15,24 @@ export class GCCoreService {
   private _stellarUsd = new BehaviorSubject<number>(0.1);
   readonly stellarUsd$ = this._stellarUsd.asObservable();
 
-  private _http;
-
-  constructor() {
-    this._http = new RxJSHttpClient();
-  }
-
   startup() {
-
-    const config: Partial<HttpRequestConfig> = {headers: {"Accept": "application/json,text/plain,*/*","Content-Type":"text/plain"}}
-    this._http.get('https://7horrxpc2jxymobmdyo3nhoeom0fvtwk.lambda-url.us-east-1.on.aws/', config)
-    .pipe(
-      catchError((a) => {
+    // const config: Partial<HttpRequestConfig> = {headers: {"Accept": "application/json,text/plain,*/*","Content-Type":"text/plain"}}
+    fetch('https://7horrxpc2jxymobmdyo3nhoeom0fvtwk.lambda-url.us-east-1.on.aws/')
+    .then((value) => {
+      if (!value.ok) {
         console.error('Failed to fetch cpi price');
-        console.error(a);
-        return EMPTY;
-      }),
-      mergeMap((x: HttpResponse) => x.json())
-    ).subscribe(x => {
-      this._cpiPrice.next(x as number)
+        console.error(value.statusText);
+      }
+      value.json().then((body: number) => this._cpiPrice.next(body))
+      
     })
-
-    this._http.get('https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd', config)
-    .pipe(
-      catchError((a) => {
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd')
+    .then((value) => {
+      if (!value.ok) {
         console.error('Failed to fetch stellar price');
-        console.error(a);
-        return EMPTY;
-      }),
-      mergeMap((x: HttpResponse) => x.json())
-    ).subscribe((x: CoingeckoStellarRequest) => {
-      const price = x.stellar.usd
-      if (price)
-        this._stellarUsd.next(price)
-      else
-        console.error(x)
+        console.error(value.statusText);
+      }
+      value.json().then((body: CoingeckoStellarRequest) => this._stellarUsd.next(body.stellar.usd))
     })
   }
 
