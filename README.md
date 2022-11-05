@@ -4,12 +4,13 @@ The repository is a web client to interact with Global Change. It contains a web
 Visit [globalchange.io](https://www.globalchange.io) for more information on Gobal Change
 
 ## Getting started ⚡
-1. Install node and npm
-(https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-2. Install nx
-`npm install -g nx`
-3. Run application locally
-`nx serve`
+
+1. **Install node and npm** (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+2. **Install nx** `npm install -g nx`
+3. **Install Requirements**
+`npm install`
+3. **Run application locally** `nx serve`
+
 Then you can go to http://localhost:4200
 
 ## Contributing ❤️
