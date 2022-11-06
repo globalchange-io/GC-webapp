@@ -1,6 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 import { CoingeckoStellarRequest } from './models/requests-modeled';
 import fetch from 'node-fetch'
+import { Server, Keypair, Networks, TransactionBuilder, Operation, Asset, Memo } from 'stellar-sdk'
+
 
 export function globalchangeCore(): string {
   return 'globalchange-core';
@@ -36,4 +38,31 @@ export class GCCoreService {
     })
   }
 
+  async mine_and_min(gcs: number, publicKey: string, receivingCharitiesAddresses: string[]) {
+    const server = new Server('https://horizon-testnet.stellar.org');
+    const proxyAccount = Keypair.random()
+    console.log(proxyAccount.publicKey())
+    const account = await server.loadAccount(publicKey)
+    const fee = await server.fetchBaseFee() * 100
+    const xmlPerCharities = "10" // todo!
+
+    const transactionBuilder = new TransactionBuilder(
+      account, {
+          fee: String(fee),
+          networkPassphrase: Networks.TESTNET
+      }
+    )
+    receivingCharitiesAddresses.forEach(address => {
+      return transactionBuilder.addOperation(Operation.payment({
+        destination: address,
+        asset: Asset.native(),
+        amount: xmlPerCharities
+      }))
+    });
+    const tx = transactionBuilder.setTimeout(200).addMemo(Memo.text('GlobalChange ' + gcs)).build()
+    tx.sign(proxyAccount)
+    const resp = await server.submitTransaction(tx)
+  }
+    
+  
 }

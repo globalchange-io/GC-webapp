@@ -15,7 +15,8 @@ export class MiningComponent implements OnInit {
   constructor(@Inject("GLOBAL_CHANGE_CORE_SERVICE") public gcCore: core.GCCoreService, private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
       'name': [null, Validators.required],
-      'validate': ''
+      'pennzy': [null, Validators.required],
+      'nicole': [null, Validators.required],
     });
     this.setChangeValidate()
   }
@@ -47,6 +48,6 @@ export class MiningComponent implements OnInit {
   }
   
   onSubmit(post: any) {
-    alert('Thanks for submitting! Data: ');
+    console.log(post)
   }
 }

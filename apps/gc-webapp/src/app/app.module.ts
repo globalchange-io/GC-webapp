@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
-import { CdkColumnDef } from '@angular/cdk/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { GCCoreService } from '@globalchange/core';
