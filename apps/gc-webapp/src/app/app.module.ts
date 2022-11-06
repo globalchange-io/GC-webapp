@@ -34,13 +34,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatTableModule,
     MatCheckboxModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
       provide: 'GLOBAL_CHANGE_CORE_SERVICE',
       useValue: new GCCoreService(),
     },
-    CdkColumnDef,
   ],
   bootstrap: [AppComponent],
 })
